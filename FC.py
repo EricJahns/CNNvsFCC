@@ -1,8 +1,8 @@
 import torch.nn as nn
 
-class Network(nn.Module):
+class FC(nn.Module):
     def __init__(self):
-        super(Network, self).__init__()
+        super(FC, self).__init__()
         self.input_size = 28*28
         self.hidden_size = 32
         self.output_size = 10
