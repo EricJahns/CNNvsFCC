@@ -4,10 +4,11 @@ class Network(nn.Module):
     def __init__(self):
         super(Network, self).__init__()
         self.input_size = 28*28
+        self.hidden_size = 32
         self.output_size = 10
 
-        self.fc1 = nn.Linear(self.input_size, self.input_size//2)
-        self.fc2 = nn.Linear(self.input_size//2, self.output_size)
+        self.fc1 = nn.Linear(self.input_size, self.hidden_size)
+        self.fc2 = nn.Linear(self.hidden_size, self.output_size)
 
         self.relu = nn.ReLU()
         self.softmax = nn.Softmax(dim=1)

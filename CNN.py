@@ -5,12 +5,14 @@ class CNN(nn.Module):
         super(CNN, self).__init__()
         self.input_size = 28*28
         self.output_size = 10
+        self.kernel_size = 4
 
-        self.conv1 = nn.Conv2d(1, 4, 3, padding=1)
-        self.conv2 = nn.Conv2d(4, 8, 3, padding=1)
+        self.conv1 = nn.Conv2d(1, self.kernel_size, 3, padding=1)
+        self.conv2 = nn.Conv2d(self.kernel_size, self.kernel_size*2, 3, padding=1)
+        self.conv3 = nn.Conv2d(self.kernel_size*2, self.kernel_size*4, 3, padding=1)
 
         self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(8 * 7 * 7, self.output_size)
+        self.fc1 = nn.Linear(self.kernel_size*4*3*3, self.output_size)
 
         self.pool = nn.MaxPool2d(2, 2)
         self.relu = nn.ReLU()
@@ -19,6 +21,7 @@ class CNN(nn.Module):
     def forward(self, x):
         x = self.pool(self.relu(self.conv1(x)))
         x = self.pool(self.relu(self.conv2(x)))
+        x = self.pool(self.relu(self.conv3(x)))
         return self.softmax(self.fc1(self.flatten(x)))
     
     def weight_init(self):
